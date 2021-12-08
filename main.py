@@ -20,6 +20,7 @@ class Bullet(Entity):
         self.color=color.green
         self.scale=(.25,.25)
         self.position=player.position
+        self.collider="box"
         self.dx = .8*math.sin(player.rotation_z/180*math.pi)
         self.dy = .8*math.cos(player.rotation_z/180*math.pi)
 
@@ -29,6 +30,16 @@ def input(key):
         bullet = Bullet()
         bullets.append(bullet)
 
+class Enemy(Entity):
+    def __init__(self):
+        super().__init__()
+        self.model= 'circle'
+        self.hp=100
+        self.color=color.azure
+        self.position =(0,5.5)
+        self.collider="box"
+
+collide = Enemy().intersects()
 
 def update():
     player.y += held_keys['w'] * time.dt * 8
@@ -39,23 +50,20 @@ def update():
 
     global bullets
     for bullet in bullets:
-        bullet.x+=time.dt*bullet.dx
-        bullet.y+=time.dt*bullet.dy
-        
-
-        
+        bullet.x+=time.dt*bullet.dx*15
+        bullet.y+=time.dt*bullet.dy*15
 
 app = Ursina()
 
-
-
-
-
-
-
-
+camera.z=-35
 
 player = Player()
+
+
+enemy=Enemy()
+
+
+
 bullets=[]
 
 
