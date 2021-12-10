@@ -2,6 +2,8 @@ from ursina import *
 import numpy as np
 import math
 
+from ursina.prefabs.platformer_controller_2d import CollisionBox
+
 
 
 
@@ -9,9 +11,11 @@ class Player(Entity):
     def __init__(self):
         super().__init__()
         self.model='quad'
+        self.collider='box'
         self.scale=(1,1)
-        self.position=(0,0)
+        self.position=(0,0,0)
         self.color=color.white50
+        self.health=500
 
 class Bullet(Entity):
     def __init__(self):
@@ -54,8 +58,9 @@ def update():
         bullet.y+=time.dt*bullet.dy*15
 
 app = Ursina()
-
 camera.z=-35
+
+ground=Entity(model='quad',color=color.green, scale=(40,1), position=(0,-7.5, 0))
 
 player = Player()
 
